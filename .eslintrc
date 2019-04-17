@@ -33,6 +33,7 @@
         "max-nested-callbacks": [2, 10],
         "import/no-unresolved": [2, { "commonjs": true }],
         "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
+        "func-names": 0,
         "valid-jsdoc": ["error", {
             "requireReturn": true,
             "requireReturnType": true,

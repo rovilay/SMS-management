@@ -1,11 +1,17 @@
 /* eslint no-console: 0 */
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import createSuperUser from '../helpers/createSuperUser';
 
 dotenv.config();
 
 const dbURL = process.env.DB_URL;
 const db = mongoose.connection;
+
+db.on('connected', () => {
+    console.log('Connection Established');
+    createSuperUser();
+});
 
 db.on('reconnected', () => {
     console.log('Connection Reestablished');
