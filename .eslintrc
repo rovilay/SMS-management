@@ -34,6 +34,7 @@
         "import/no-unresolved": [2, { "commonjs": true }],
         "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
         "func-names": 0,
+        "no-underscore-dangle": 0,
         "valid-jsdoc": ["error", {
             "requireReturn": true,
             "requireReturnType": true,

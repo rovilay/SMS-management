@@ -1,12 +1,13 @@
 /* eslint max-len: 0 */
 import mongoose from 'mongoose';
+import mongooseDelete from 'mongoose-delete';
 
 import { hashPassword } from '../helpers/utils';
-import { allowedUserRoles, invalidPhoneNumberMsg } from '../helpers/defaults';
+import { invalidPhoneNumberMsg } from '../helpers/defaults';
 
 const { Schema } = mongoose;
 
-const UserSchema = new Schema({
+const ContactSchema = new Schema({
     name: {
         type: String,
         required: [true, 'name is required'],
@@ -42,18 +43,10 @@ const UserSchema = new Schema({
             },
             message: () => 'password length must be greater than 6'
         }
-    },
-    role: {
-        type: String,
-        required: true,
-        trim: true,
-        default: 'USER',
-        uppercase: true,
-        enum: allowedUserRoles
     }
 });
 
-UserSchema.pre('save', async function () {
+ContactSchema.pre('save', async function () {
     try {
         if (this.password) {
             this.password = await hashPassword(this.password);
@@ -63,6 +56,8 @@ UserSchema.pre('save', async function () {
     }
 });
 
-const User = mongoose.model('User', UserSchema);
+ContactSchema.plugin(mongooseDelete, { deletedAt: true });
+
+const User = mongoose.model('Contact', ContactSchema);
 
 export default User;

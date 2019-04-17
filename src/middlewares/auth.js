@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { genericErrorMessage, unAuthorizedMessage } from '../helpers/defaults';
-import User from '../models/User';
+import {
+    genericErrorMessage, invalidToken, tokenRequired
+} from '../helpers/defaults';
+import Contact from '../models/Contact';
 
 dotenv.config();
 
@@ -12,7 +14,7 @@ export const authenticate = async (req, res, next) => {
 
         if (!bearerToken || bearerToken.split(' ')[0] !== 'Bearer') {
             const error = {
-                message: 'Token is required',
+                message: tokenRequired,
                 status: 401
             };
 
@@ -23,18 +25,17 @@ export const authenticate = async (req, res, next) => {
         // verify token
         jwt.verify(token, SECRET, (err, userData) => {
             if (err || userData === undefined) {
-                err.status = 401;
                 err.message = genericErrorMessage;
                 return next(err);
             }
             const { _id } = userData;
 
-            User.findById(_id)
-                .exec((err, user) => {
-                    if (err || !user) {
+            Contact.findOne({ _id, deleted: false })
+                .exec((err, contact) => {
+                    if (err || !contact) {
                         const error = {
-                            message: 'user does not exist',
-                            status: 404
+                            message: invalidToken,
+                            status: 401
                         };
 
                         return next(error);
@@ -42,8 +43,8 @@ export const authenticate = async (req, res, next) => {
 
                     const {
                         _id: id, name, role, phoneNumber
-                    } = user;
-                    req.user = {
+                    } = contact;
+                    req.contact = {
                         _id: id, name, role, phoneNumber
                     };
                     return next();
@@ -54,28 +55,4 @@ export const authenticate = async (req, res, next) => {
     }
 };
 
-export const verifyUserRole = (user, roles) => {
-    let valid = false;
-    const { role } = user;
-    valid = roles.includes(role);
-
-    return valid;
-};
-
-export const authorize = roles => async (req, res, next) => {
-    try {
-        const { user } = req;
-        const valid = await verifyUserRole(user, roles);
-
-        if (valid) return next();
-
-        const error = {
-            message: unAuthorizedMessage,
-            status: 403
-        };
-
-        return next(error);
-    } catch (error) {
-        return next(error);
-    }
-};
+export default authenticate;
