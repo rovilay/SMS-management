@@ -1,49 +1,51 @@
 {
-  "name": "sms-management",
-  "version": "1.0.0",
-  "description": "SMS management app",
-  "main": "index.js",
-  "repository": "https://github.com/rovilay/SMS-management.git",
-  "author": "rovilay <rovilayjnr01@gmail.com>",
-  "license": "MIT",
-  "jest": {
-		"collectCoverage": true,
-		"collectCoverageFrom": [
-			"src/**/*.js",
-			"!src/index.js"
-		],
-		"testMatch": [
-			"<rootDir>/src/**/__tests__/**/?(*.)(spec|test)js",
-			"<rootDir>/src/**/?(*.)(spec|test).js"
-		],
-		"testEnvironment": "node",
-		"transform": {
-			".*": "babel-jest"
-		}
-	},
-  "scripts": {
-		"test": "NODE_ENV=test jest --no-cache  --detectOpenHandles --runInBand --forceExit",
-		"build": "babel src -d dist",
-		"start": "node ./dist/index.js",
-		"server": "nodemon --exec babel-node ./src/index.js"
-	},
-  "dependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^7.0.0",
-    "express": "^4.16.4"
-  },
-  "devDependencies": {
-    "@babel/node": "^7.2.2",
-    "babel-jest": "^24.7.1",
-    "chai": "^4.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.2",
-    "jest": "^24.7.1",
-    "nodemon": "^1.18.11",
-    "supertest": "^4.0.2"
+ "name": "sms-management",
+ "version": "1.0.0",
+ "description": "SMS management app",
+ "main": "index.js",
+ "repository": "https://github.com/rovilay/SMS-management.git",
+ "author": "rovilay <rovilayjnr01@gmail.com>",
+ "license": "MIT",
+ "jest": {
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+   "src/**/*.js",
+   "!src/index.js"
+  ],
+  "testMatch": [
+   "<rootDir>/src/**/__tests__/**/?(*.)(spec|test)js",
+   "<rootDir>/src/**/?(*.)(spec|test).js"
+  ],
+  "testEnvironment": "node",
+  "transform": {
+   ".*": "babel-jest"
   }
+ },
+ "scripts": {
+  "test": "NODE_ENV=test jest --no-cache  --detectOpenHandles --runInBand --forceExit",
+  "build": "babel src -d dist",
+  "start": "node ./dist/index.js",
+  "server": "nodemon --exec babel-node ./src/index.js"
+ },
+ "dependencies": {
+  "@babel/cli": "^7.4.3",
+  "@babel/core": "^7.4.3",
+  "@babel/preset-env": "^7.4.3",
+  "body-parser": "^1.18.3",
+  "cors": "^2.8.5",
+  "dotenv": "^7.0.0",
+  "express": "^4.16.4",
+  "mongoose": "^5.5.2"
+ },
+ "devDependencies": {
+  "@babel/node": "^7.2.2",
+  "babel-jest": "^24.7.1",
+  "chai": "^4.2.0",
+  "eslint": "^5.16.0",
+  "eslint-config-airbnb-base": "^13.1.0",
+  "eslint-plugin-import": "^2.17.2",
+  "jest": "^24.7.1",
+  "nodemon": "^1.18.11",
+  "supertest": "^4.0.2"
+ }
 }
