@@ -7,7 +7,23 @@ import {
     smsNotFoundMsg, validSmsStatus
 } from '../helpers/defaults';
 
+/**
+ * Handles operations on sms routes
+ *
+ * @exports
+ * @class SmsController
+ */
 class SmsController {
+    /**
+     * Creates Sms
+     *
+     * @static
+     * @param  {object} req - request object
+     * @param  {object} res - response object
+     * @param  {object} next - next object
+     * @returns {object} response object
+     * @memberof SmsController
+     */
     static async createSms(req, res, next) {
         try {
             const { message } = req.body;
@@ -58,6 +74,16 @@ class SmsController {
         }
     }
 
+    /**
+     * Gets Sms
+     *
+     * @static
+     * @param  {object} req - request object
+     * @param  {object} res - response object
+     * @param  {object} next - next object
+     * @returns {object} response object
+     * @memberof SmsController
+     */
     static async getSms(req, res, next) {
         try {
             const { phoneNumber } = req.contact;
@@ -116,6 +142,16 @@ class SmsController {
         }
     }
 
+    /**
+     * Updates sms status
+     *
+     * @static
+     * @param  {object} req - request object
+     * @param  {object} res - response object
+     * @param  {object} next - next object
+     * @returns {object} response object
+     * @memberof SmsController
+     */
     static async updateSmsStatus(req, res, next) {
         try {
             const { status: newStatus } = req.body;

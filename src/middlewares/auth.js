@@ -8,7 +8,15 @@ import Contact from '../models/Contact';
 dotenv.config();
 
 const { SECRET } = process.env;
-export const authenticate = async (req, res, next) => {
+/**
+ * Middleware that authencticates routes
+ *
+ * @param {object} req - request object
+ * @param {object} res - response object
+ * @param {object} next - next object
+ * @returns {object} next object
+ */
+const authenticate = async (req, res, next) => {
     try {
         const { authorization: bearerToken } = req.headers;
 

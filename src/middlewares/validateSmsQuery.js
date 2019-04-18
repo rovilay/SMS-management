@@ -1,5 +1,13 @@
 import { validSmsStatus, mustBeNumber, smsTypeError } from '../helpers/defaults';
 
+/**
+ * Middleware the validates request queries on sms routes
+ *
+ * @param {object} req - request object
+ * @param {object} res - response object
+ * @param {object} next - next object
+ * @returns {object} next object
+ */
 const validateSmsQuery = (req, res, next) => {
     try {
         const { limit, offset, type } = req.query;
