@@ -11,31 +11,34 @@ export const hashPassword = async (password) => {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         return hashedPassword;
     } catch (error) {
-        return error;
+        throw error;
     }
 };
 
 export const comparePassword = async (hashedPassword, password) => {
     try {
         const match = await bcrypt.compare(password, hashedPassword);
-
         return match;
     } catch (error) {
-        return error;
+        throw error;
     }
 };
 
 
-export const generateToken = (user) => {
-    const {
-        _id, role, phoneNumber, name
-    } = user;
+export const generateToken = async (user) => {
+    try {
+        const {
+            _id, role, phoneNumber, name
+        } = user;
 
-    const token = jwt.sign({
-        _id, role, phoneNumber, name
-    },
-    process.env.SECRET, { expiresIn: '24h' });
-    return token;
+        const token = await jwt.sign({
+            _id, role, phoneNumber, name
+        },
+        process.env.SECRET, { expiresIn: '24h' });
+        return token;
+    } catch (error) {
+        throw error;
+    }
 };
 
 export const verifyToken = (token) => {
