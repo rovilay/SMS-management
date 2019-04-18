@@ -1,23 +1,26 @@
 /* eslint max-len: 0 */
 import mongoose from 'mongoose';
 import mongooseDelete from 'mongoose-delete';
+import mongoosePaginate from 'mongoose-paginate';
 
 import { hashPassword } from '../helpers/utils';
-import { invalidPhoneNumberMsg } from '../helpers/defaults';
+import {
+    invalidPhoneNumberMsg, passwordError, requiredPhoneNumber, requiredName,
+    unavailablePhoneNumber
+} from '../helpers/defaults';
 
 const { Schema } = mongoose;
 
 const ContactSchema = new Schema({
     name: {
         type: String,
-        required: [true, 'name is required'],
+        required: [true, requiredName],
         trim: true
     },
     phoneNumber: {
         type: String,
-        required: [true, 'phone number is required'],
+        required: [true, requiredPhoneNumber],
         trim: true,
-        unique: true,
         validate: {
             validator: (phoneNumber) => {
                 const regex = /^[0][7-9][0-1]\d{8}$/;
@@ -41,9 +44,11 @@ const ContactSchema = new Schema({
 
                 return valid;
             },
-            message: () => 'password length must be greater than 6'
+            message: () => passwordError
         }
     }
+}, {
+    timestamps: true
 });
 
 ContactSchema.pre('save', async function () {
@@ -56,8 +61,14 @@ ContactSchema.pre('save', async function () {
     }
 });
 
+ContactSchema.path('phoneNumber').validate(async (phoneNumber) => {
+    const contact = await mongoose.models.Contact.findOne({ phoneNumber });
+    return !contact;
+}, unavailablePhoneNumber);
+
 ContactSchema.plugin(mongooseDelete, { deletedAt: true });
+ContactSchema.plugin(mongoosePaginate);
 
-const User = mongoose.model('Contact', ContactSchema);
+const Contact = mongoose.model('Contact', ContactSchema);
 
-export default User;
+export default Contact;
