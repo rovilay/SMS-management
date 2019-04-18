@@ -39,7 +39,7 @@ class SmsController {
                 throw error;
             }
 
-            let conditions = { phoneNumber: receiver, deleted: false };
+            let conditions = { phoneNumber: receiver };
             const receiverContact = await DB.findOne(Contact, conditions);
 
             if (!receiverContact) {
@@ -93,22 +93,14 @@ class SmsController {
                     { sender: phoneNumber, },
                     { receiver: phoneNumber }
                 ],
-                deleted: false
             };
 
             if (type === validSmsStatus[0]) {
-                conditions = {
-                    sender: phoneNumber,
-                    deleted: false
-                };
+                conditions = { sender: phoneNumber };
             }
 
             if (type === validSmsStatus[1]) {
-                conditions = {
-                    receiver: phoneNumber,
-                    status: type,
-                    deleted: false
-                };
+                conditions = { receiver: phoneNumber, status: type };
             }
 
             const options = {
