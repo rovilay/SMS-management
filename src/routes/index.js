@@ -1,6 +1,7 @@
 import { apiPrefix, appWelcomeMsg, nonExistingRouteMsg } from '../helpers/defaults';
 
 import errorHandler from '../middlewares/errorhandler';
+import contactRoutes from './contactRoutes';
 
 const routes = (app) => {
     app.get(['/', apiPrefix], (_, res) => {
@@ -9,6 +10,8 @@ const routes = (app) => {
             message: appWelcomeMsg
         });
     });
+
+    app.use(apiPrefix, contactRoutes);
 
     // add new routes before the errorHandler
     app.use(errorHandler);

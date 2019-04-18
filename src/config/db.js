@@ -7,6 +7,10 @@ dotenv.config();
 const dbURL = process.env.DB_URL;
 const db = mongoose.connection;
 
+db.on('connected', () => {
+    console.log('Connection Established');
+});
+
 db.on('reconnected', () => {
     console.log('Connection Reestablished');
 });
