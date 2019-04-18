@@ -4,6 +4,12 @@ import errorHandler from '../middlewares/errorhandler';
 import contactRoutes from './contactRoutes';
 import smsRoutes from './smsRoutes';
 
+/**
+ * Initializes routes
+ *
+ * @param {*} app - application
+ * @returns {*} app with routes
+ */
 const routes = (app) => {
     app.get(['/', apiPrefix], (_, res) => {
         res.status(200).json({

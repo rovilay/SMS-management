@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { smsApiPrefix } from '../helpers/defaults';
-import { authenticate } from '../middlewares/auth';
+import authenticate from '../middlewares/auth';
 import smsController from '../controllers/Sms';
 import validateSmsQuery from '../middlewares/validateSmsQuery';
 
@@ -21,7 +21,7 @@ smsRoutes.get(
 );
 
 smsRoutes.put(
-    `${smsApiPrefix}/:smsId`,
+    `${smsApiPrefix}/:smsId/status`,
     authenticate,
     smsController.updateSmsStatus
 );

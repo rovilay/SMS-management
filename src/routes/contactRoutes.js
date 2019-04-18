@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { contactApiPrefix } from '../helpers/defaults';
-import { authenticate } from '../middlewares/auth';
+import authenticate from '../middlewares/auth';
 import contactController from '../controllers/Contact';
 
 const contactRoutes = express.Router();
@@ -17,7 +17,7 @@ contactRoutes.get(
 );
 
 contactRoutes.delete(
-    `${contactApiPrefix}/delete`,
+    `${contactApiPrefix}`,
     authenticate,
     contactController.deleteContact
 );

@@ -6,7 +6,23 @@ import {
     defaultSuccessMsg, unavailableContact, invalidCredentials
 } from '../helpers/defaults';
 
+/**
+ * Handles operations on contact routes
+ *
+ * @exports
+ * @class ContactController
+ */
 class ContactController {
+    /**
+     * Creates a contact
+     *
+     * @static
+     * @param  {object} req - request object
+     * @param  {object} res - response object
+     * @param  {object} next - next object
+     * @returns {object} response object
+     * @memberof ContactController     *
+     */
     static async createContact(req, res, next) {
         try {
             const { name, phoneNumber, password } = req.body;
@@ -31,6 +47,16 @@ class ContactController {
         }
     }
 
+    /**
+     * Logins in a contact
+     *
+     * @static
+     * @param  {object} req - request object
+     * @param  {object} res - response object
+     * @param  {object} next - next object
+     * @returns {object} response object
+     * @memberof ContactController
+     */
     static async loginContact(req, res, next) {
         try {
             const { phoneNumber, password } = req.body;
@@ -70,6 +96,16 @@ class ContactController {
         }
     }
 
+    /**
+     * Gets a contact
+     *
+     * @static
+     * @param  {object} req - request object
+     * @param  {object} res - response object
+     * @param  {object} next - next object
+     * @returns {object} response object
+     * @memberof ContactController
+     */
     static async getContact(req, res, next) {
         try {
             const { id } = req.params;
@@ -96,6 +132,16 @@ class ContactController {
         }
     }
 
+    /**
+     * Deletes a contact and all associated sms
+     *
+     * @static
+     * @param  {object} req - request object
+     * @param  {object} res - response object
+     * @param  {object} next - next object
+     * @returns {object} response object
+     * @memberof ContactController
+     */
     static async deleteContact(req, res, next) {
         try {
             const { _id, phoneNumber } = req.contact;
